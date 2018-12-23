@@ -1,0 +1,34 @@
+{% extends 'noteEditor/base.html' %}
+
+{% block body %}
+
+{% load staticfiles %}
+
+<div class='container'>
+	<center>
+	{% if user.username == '' %}
+		<h1>Add sticky notes to cloud</h1>
+		<h3><a href="{% url 'noteEditor:login_user' %}">Login</a> or <a href="{% url 'noteEditor:register' %}">Register</a></h3>
+		<img src="{% static 'noteEditor/images/stickyNote.png' %}" style='width:350px;height:400px'>
+	{% else %}
+		<h1>{{user.username}}</h1>
+		<div style='max-width: 700px'>
+		{% if savedNotes %}
+			<table>
+			{% for note in savedNotes %}
+				<tr>
+					<td>{{note.noteHead}}</td>
+					<td>{{note.noteBody}}</td>
+					<td>{{note.created_at}}</td>	
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+		{% else %}
+			<h3>No Notes..!!</h3>
+		{% endif %}
+	{% endif %}
+	</center>
+</div>
+
+{% endblock %}
